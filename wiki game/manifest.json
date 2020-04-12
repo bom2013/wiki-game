@@ -1,5 +1,13 @@
 {
- "manifest_version": 2,
- "name": "Wiki game",
- "version": "1.0"
+   "background": {
+      "scripts": [ "background.js" ]
+   },
+   "content_scripts": [ {
+      "js": [ "jquery-3.5.0.min.js", "content.js" ],
+      "matches": [ "https://he.wikipedia.org/*" ]
+   } ],
+   "manifest_version": 2,
+   "name": "The Wikipedia Game",
+   "permissions": [ "https://he.wikipedia.org/" ],
+   "version": "1.0"
 }
