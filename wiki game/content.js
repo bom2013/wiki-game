@@ -11,8 +11,12 @@ chrome.storage.local.get("game_on", function(g_s) {
 		$("#right-navigation").hide();
 		$("#left-navigation").hide();
 		$("#p-personal").hide();
-		$("#mw-head").append('<div id="disabled-message-injected"><style>#disabled-message-injected{text-align: center;}</style> <h3> אזור זה מושבת בעת המשחק ויחזור מיד שיסתיים </h3></div>');
-        chrome.storage.local.get("des_page", function(d_p) 
+		$("#mw-head").append('<div id="disabled-message-injected"><style>#disabled-message-injected{text-align: center;}</style> <h3>אזור זה מושבת בעת המשחק ויחזור לאחר מכן</h3></div>');
+        $("#mw-panel .portal").hide()
+		$("#mw-panel").append("</br><h4>אזור זה מושבת בעת המשחק ויחזור לאחר מכן</h4>")
+
+		
+		chrome.storage.local.get("des_page", function(d_p) 
 		{
 			if (d_p.des_page == "")//first run, to get the destination page
 			{
