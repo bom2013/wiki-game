@@ -17,11 +17,5 @@ chrome.runtime.onConnect.addListener(function(port)
 			chrome.storage.local.set({game_on: false});
 			chrome.browserAction.setPopup({popup: "popup.html"});
 		}
-        else
-        {/* 
-            pages_visited.push(message);
-            port.postMessage(pages_visited.length);
-            console.log(pages_visited);
-         */}
     });
 });
