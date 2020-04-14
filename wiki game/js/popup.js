@@ -7,8 +7,8 @@ $(document).ready(function() {
 	chrome.storage.local.set({game_on: true});
     chrome.storage.local.set({des_page: ""});
 	chrome.storage.local.set({src_page: ""});
-    chrome.storage.local.set({moves: "-1"});
-	
+    chrome.storage.local.set({moves: "0"});
+	chrome.storage.local.set({page_list: []});
 	//set the popup to game_popup.html
 	chrome.browserAction.setPopup({popup: "src/game_popup.html"});
 	

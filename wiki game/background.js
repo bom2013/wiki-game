@@ -17,5 +17,11 @@ chrome.runtime.onConnect.addListener(function(port)
 			chrome.storage.local.set({game_on: false});
 			chrome.browserAction.setPopup({popup: "popup.html"});
 		}
+		else
+		{
+			console.log("Push page name(" + message + ") to list - background.js");
+			pageList.push(message);
+			chrome.storage.local.set({page_list: pageList});
+		}
     });
 });

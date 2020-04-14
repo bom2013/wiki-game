@@ -20,28 +20,64 @@ chrome.storage.local.get("game_on", function(g_s) {
 				desPage = d_p.des_page;
 				chrome.storage.local.get("src_page", function(s_p)
 				{
-					if (s_p.src_page == "")//second run, this is the source page
+					var CurrentPageName = $("#firstHeading").text();
+					if (s_p.src_page == "")
 					{
-						chrome.storage.local.set({src_page: $("#firstHeading").text()});
-						srcPage = $("#firstHeading").text();
+						chrome.storage.local.set({src_page: CurrentPageName});
+						srcPage = CurrentPageName;
+						//second run, this is the source page
 					}
-					else//normal run, src_page and des_page already set
+					else
 					{
+						//normal run, src_page and des_page already set
 						srcPage = s_p.src_page;
 					}
-					chrome.storage.local.get("moves", function(m)
+					
+					//to check if need to increament the moves variable(If done navigating to another page)
+					var samePageAsBefore = false;
+					chrome.storage.local.get("page_list", function(p_l)
 					{
-						moves = m.moves;
-						if($("#firstHeading").text() == desPage)
+						//inject the html to the page
+						chrome.storage.local.get("moves", function(m)
 						{
-							$('<div id="content-injected-wiki-game"> <style>#content-injected-wiki-game{direction: rtl; text-align: center; background-color: #00FF00; font-size: 20px;}</style> <h3>כל הכבוד! הגעת ליעד</h3></div>').insertAfter("#firstHeading");
-							port.postMessage("WIN");
-						}
-						chrome.storage.local.set({moves: (parseInt(moves)+1).toString()});
-						$('<div id="content-injected-wiki-game"> <style>#content-injected-wiki-game{direction: rtl; text-align: center; background-color: #00FF7F; font-size: 20px;}#content-injected-wiki-game table, #content-injected-wiki-game th, #content-injected-wiki-game td{border: 1px solid black; border-collapse: collapse;}</style> <table style="width:100%"> <tr> <th>דף מקור</th> <th>צעדים</th> <th>דף יעד</th> </tr><tr> <td id="src-data-td"></td><td id="move-data-td"></td><td id="des-data-td"></td></tr></table></div>').insertAfter("#firstHeading");
-						$("#src-data-td").append(srcPage);
-						$("#move-data-td").append((parseInt(moves)+1).toString());
-						$("#des-data-td").append(desPage);
+							if(p_l.page_list.length == 0)//second run - start of the game, the list is empty
+							{
+								port.postMessage(CurrentPageName);
+							}
+							else
+							{
+								//Checking it is really a new page and not the same page (refresh)
+								var PreviousPage = p_l.page_list[p_l.page_list.length-1];
+								if(CurrentPageName != PreviousPage)
+								{
+									port.postMessage(CurrentPageName);
+								}
+								else
+								{
+									samePageAsBefore = true;//needed for increament of the move variable 
+								}
+							}
+							
+							moves = m.moves;
+							if(p_l.page_list.length != m.moves && !samePageAsBefore)//If done navigating to another page *and* not the same page(refresh)
+							{
+								moves++;
+								chrome.storage.local.set({moves: moves.toString()});
+							}
+							
+							//Check if win
+							if(CurrentPageName == desPage)
+							{
+								$('<div id="content-injected-wiki-game"> <style>#content-injected-wiki-game{direction: rtl; text-align: center; background-color: #00FF00; font-size: 20px;}</style> <h3>כל הכבוד! הגעת ליעד</h3></div>').insertAfter("#firstHeading");
+								port.postMessage("WIN");
+							}
+							
+							//inject table
+							$('<div id="content-injected-wiki-game"> <style>#content-injected-wiki-game{direction: rtl; text-align: center; background-color: #00FF7F; font-size: 20px;}#content-injected-wiki-game table, #content-injected-wiki-game th, #content-injected-wiki-game td{border: 1px solid black; border-collapse: collapse;}</style> <table style="width:100%"> <tr> <th>דף מקור</th> <th>צעדים</th> <th>דף יעד</th> </tr><tr> <td id="src-data-td"></td><td id="move-data-td"></td><td id="des-data-td"></td></tr></table></div>').insertAfter("#firstHeading");
+							$("#src-data-td").append(srcPage);
+							$("#move-data-td").append(moves.toString());
+							$("#des-data-td").append(desPage);
+						});
 					});
 				});
 				
