@@ -8,6 +8,10 @@ var port = chrome.runtime.connect({name: "background"});
 chrome.storage.local.get("game_on", function(g_s) {
     if (g_s.game_on)
 	{
+		$("#right-navigation").hide();
+		$("#left-navigation").hide();
+		$("#p-personal").hide();
+		$("#mw-head").append('<div id="disabled-message-injected"><style>#disabled-message-injected{text-align: center;}</style> <h3> אזור זה מושבת בעת המשחק ויחזור מיד שיסתיים </h3></div>');
         chrome.storage.local.get("des_page", function(d_p) 
 		{
 			if (d_p.des_page == "")//first run, to get the destination page
