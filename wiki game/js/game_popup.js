@@ -14,9 +14,9 @@ $(document).ready(function()
 	{
 		$("#move-p").append(data.moves);
 	});
-	$('#stop-button').click(function() 
+	$('#stop-button').click(function()
 	{
-		if (confirm('אתה בטוח שברצונך להפסיק את המשחק בעיצומו?')) 
+		if (confirm('אתה בטוח שברצונך להפסיק את המשחק בעיצומו?'))
 		{
 			chrome.storage.local.set({game_on: false});
 			port.postMessage("STOP");
