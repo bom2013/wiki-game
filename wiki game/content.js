@@ -20,37 +20,43 @@ chrome.storage.local.get("game_on", function (g_s) {
     var desPageName;
     var srcPageName;
     var moves;
-
+    var validPage = true;
     //check that this page is new and not a refresh of the previous page 
     chrome.storage.local.get("page_list", function (p_l) {
       previousPage = p_l.page_list[p_l.page_list.length - 1]
-      if (document.referrer == "" && p_l.page_list.length != 0) {
-        alert("רמאי! אסור לנווט לדפים שלא מתוך קישור בדף")
-        window.location.replace(getWikiLinkFromPageName(previousPage));
-      }
-      else if (p_l.page_list.length == 0) {
+
+      if (p_l.page_list.length == 0) {
         port.postMessage(currentPageName);
       }
       else if (previousPage != currentPageName) {
-        port.postMessage(currentPageName);
+        if (document.referrer == "" && p_l.page_list.length != 0) {
+          alert("רמאי! אסור לנווט לדפים שלא מתוך קישור בדף")
+          window.location.replace(getWikiLinkFromPageName(previousPage));
+          validPage = false;
+        }
+        else {
+          port.postMessage(currentPageName);
+        }
       }
-      chrome.storage.local.get("des_page_name", function (d_p) {
-        desPageName = d_p.des_page_name;
-        chrome.storage.local.get("src_page_name", function (s_p) {
-          srcPageName = s_p.src_page_name;
-          chrome.storage.local.get("moves", function (m) {
-            moves = m.moves - 1;
-            $('<div id="content-injected-wiki-game"> <style>#content-injected-wiki-game{direction: rtl; text-align: center; background-color: #00FF7F; font-size: 20px;}#content-injected-wiki-game table, #content-injected-wiki-game th, #content-injected-wiki-game td{border: 1px solid black; border-collapse: collapse;}</style> <table style="width:100%"> <tr> <th>דף מקור</th> <th>צעדים</th> <th>דף יעד</th> </tr><tr> <td id="src-data-td"></td><td id="move-data-td"></td><td id="des-data-td"></td></tr></table></div>').insertAfter("#firstHeading");
-            $("#src-data-td").append(srcPageName);
-            $("#move-data-td").append(moves.toString());
-            $("#des-data-td").append(desPageName);
-            if (currentPageName == desPageName) {
-              $('<div id="content-injected-wiki-game"> <style>#content-injected-wiki-game{direction: rtl; text-align: center; background-color: #00FF00; font-size: 20px;}</style> <h3>כל הכבוד! הגעת ליעד</h3></div>').insertAfter("#firstHeading");
-              port.postMessage("WIN");
-            }
+      if (validPage) {
+        chrome.storage.local.get("des_page_name", function (d_p) {
+          desPageName = d_p.des_page_name;
+          chrome.storage.local.get("src_page_name", function (s_p) {
+            srcPageName = s_p.src_page_name;
+            chrome.storage.local.get("moves", function (m) {
+              moves = m.moves - 1;
+              $('<div id="content-injected-wiki-game"> <style>#content-injected-wiki-game{direction: rtl; text-align: center; background-color: #00FF7F; font-size: 20px;}#content-injected-wiki-game table, #content-injected-wiki-game th, #content-injected-wiki-game td{border: 1px solid black; border-collapse: collapse;}</style> <table style="width:100%"> <tr> <th>דף מקור</th> <th>צעדים</th> <th>דף יעד</th> </tr><tr> <td id="src-data-td"></td><td id="move-data-td"></td><td id="des-data-td"></td></tr></table></div>').insertAfter("#firstHeading");
+              $("#src-data-td").append(srcPageName);
+              $("#move-data-td").append(moves.toString());
+              $("#des-data-td").append(desPageName);
+              if (currentPageName == desPageName) {
+                $('<div id="content-injected-wiki-game"> <style>#content-injected-wiki-game{direction: rtl; text-align: center; background-color: #00FF00; font-size: 20px;}</style> <h3>כל הכבוד! הגעת ליעד</h3></div>').insertAfter("#firstHeading");
+                port.postMessage("WIN");
+              }
+            });
           });
         });
-      });
+      }
     });
 
 
