@@ -2,13 +2,13 @@ var port = chrome.runtime.connect({name: "background"});
 
 $(document).ready(function()
  {
-	chrome.storage.local.get("des_page", function(data)
+	chrome.storage.local.get("des_page_name", function(data)
 	{
-		$("#des-p").append(data.des_page);
+		$("#des-p").append(data.des_page_name);
 	});
-	chrome.storage.local.get("src_page", function(data)
+	chrome.storage.local.get("src_page_name", function(data)
 	{
-		$("#src-p").append(data.src_page);
+		$("#src-p").append(data.src_page_name);
 	});
 	chrome.storage.local.get("moves", function(data)
 	{
