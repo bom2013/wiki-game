@@ -5,7 +5,11 @@ var moves;
 var port = chrome.runtime.connect({
   name: "background"
 });
-
+chrome.runtime.onMessage.addListener(
+  function (request, sender, sendResponse) {
+    console.log("Get STOP message - content.js")
+    window.location.reload();
+  });
 //inject the data table and updating local variables if not done yet (source and destination)
 chrome.storage.local.get("game_on", function (g_s) {
   if (g_s.game_on) {

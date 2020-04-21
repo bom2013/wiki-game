@@ -15,7 +15,12 @@ $(document).ready(function () {
 			chrome.storage.local.set({ game_on: false });
 			port.postMessage("STOP");
 			chrome.browserAction.setPopup({ popup: "../popup.html" });
-			window.location.href = "../popup.html";
+			chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+				chrome.tabs.sendMessage(tabs[0].id, { message: "STOP" }, function (response) {
+					window.location.href = "../popup.html";
+				});
+			});
+
 		}
 	});
 });
