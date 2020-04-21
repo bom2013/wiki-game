@@ -15,6 +15,7 @@ $(document).ready(function () {
 			chrome.storage.local.set({ game_on: false });
 			port.postMessage("STOP");
 			chrome.browserAction.setPopup({ popup: "../popup.html" });
+			window.location.href = "../popup.html";
 		}
 	});
 });
