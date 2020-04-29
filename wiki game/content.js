@@ -49,10 +49,11 @@ chrome.storage.local.get("game_on", function (g_s) {
             srcPageName = s_p.src_page_name;
             chrome.storage.local.get("moves", function (m) {
               moves = m.moves - 1;
-              $('<div id="content-injected-wiki-game"> <style>#content-injected-wiki-game{direction: rtl; text-align: center; background-color: #00FF7F; font-size: 20px;}#content-injected-wiki-game table, #content-injected-wiki-game th, #content-injected-wiki-game td{border: 1px solid black; border-collapse: collapse;}</style> <table style="width:100%"> <tr> <th>דף מקור</th> <th>צעדים</th> <th>דף יעד</th> </tr><tr> <td id="src-data-td"></td><td id="move-data-td"></td><td id="des-data-td"></td></tr></table></div>').insertAfter("#firstHeading");
+              $('<div id="content-injected-wiki-game"> <style>#content-injected-wiki-game{direction: rtl; text-align: center; background-color: #00FF7F; font-size: 20px;}#content-injected-wiki-game table, #content-injected-wiki-game th, #content-injected-wiki-game td{border: 1px solid black; border-collapse: collapse;}</style> <style>.NameHighlights{position: relative;}.NameHighlights div{display: none;}.NameHighlightsHover{position: relative;}.NameHighlightsHover div{display: block; background-color: #DDD; padding: 5px; border-radius: 4px;}</style> <script>window.addEventListener("load", function(){var span=document.querySelectorAll("#des-data-td"); for (var i=span.length; i--;){(function(){var t; span[i].onmouseover=function(){hideAll(); clearTimeout(t); this.className="NameHighlightsHover";}; span[i].onmouseout=function(){var self=this; t=setTimeout(function(){self.className="NameHighlights";}, 300);};})();}function hideAll(){for (var i=span.length; i--;){span[i].className="NameHighlights";}};}); </script> <table style="width:100%"> <tr> <th>דף מקור</th> <th>צעדים</th> <th>דף יעד</th> </tr><tr> <td id="src-data-td"> </td><td id="move-data-td"></td><td id="des-data-td"> <span class="NameHighlights"> <div id=description-popup-des-data> </div></span> </td></tr></table></div>').insertAfter("#firstHeading");
               $("#src-data-td").append(srcPageName);
               $("#move-data-td").append(moves.toString());
-              $("#des-data-td").append(desPageName);
+              $("#des-data-td").prepend(desPageName);
+              getWikiPageDescription(desPageName, function (d) { $("#description-popup-des-data").prepend(d); });
               if (currentPageName == desPageName) {
                 $('<div id="content-injected-wiki-game"> <style>#content-injected-wiki-game{direction: rtl; text-align: center; background-color: #00FF00; font-size: 20px;}</style> <h3>כל הכבוד! הגעת ליעד</h3></div>').insertAfter("#firstHeading");
                 port.postMessage("WIN");
