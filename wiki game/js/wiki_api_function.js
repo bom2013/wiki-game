@@ -106,3 +106,14 @@ function getWikiPageDescription(pageName, callback) {
       callback(description);
     })
 }
+
+/**
+ * Check if wiki page is Disambiguation page(https://en.wikipedia.org/wiki/Wikipedia:Disambiguation)
+ * @param {string} pageName The wiki page name
+ * @param {function} callback Function that call after finish to get the data
+ */
+function checkIfDisambiguationWikiPage(pageName, callback) {
+  getAllCategoriesOfWikiPage(pageName, function (cat) {
+    callback(cat.include("ויקיפדיה:פירושונים") || cat.include("תבנית:פירושונים"));
+  });
+}
