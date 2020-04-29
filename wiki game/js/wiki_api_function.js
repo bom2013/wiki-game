@@ -82,9 +82,27 @@ function getAllCategoriesOfWikiPage(pageName, callback) {
  * @param {string} pageName The wiki page name
  * @param {function} callback Function that call after finish to get the data
  */
-function checkIfOrphanWikiPage(pageName, callback)
-{
-  getAllCategoriesOfWikiPage(pageName, function(cat){
+function checkIfOrphanWikiPage(pageName, callback) {
+  getAllCategoriesOfWikiPage(pageName, function (cat) {
     callback(cat.include("ויקיפדיה:מיזמי ויקיפדיה/ערכים יתומים"));
   });
+}
+
+/**
+ * Get short description of wiki page
+ * 
+ * @param {string} pageName The wiki page name
+ * @param {function} callback The callback function that call when the function finish to get the description
+ */
+function getWikiPageDescription(pageName, callback) {
+  fetch("https://he.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exintro&explaintext&redirects=1&titles=" + pageName + "&origin=*")
+    .then(function (response) {
+      return response.json();
+    })
+    .then((response) => {
+      var links = response.query.pages;
+      var pageId = Object.keys(links)[0];
+      description = links[pageId].extract;
+      callback(description);
+    })
 }
