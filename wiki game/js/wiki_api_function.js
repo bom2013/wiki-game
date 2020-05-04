@@ -117,3 +117,22 @@ function checkIfDisambiguationWikiPage(pageName, callback) {
     callback(cat.include("ויקיפדיה:פירושונים") || cat.include("תבנית:פירושונים"));
   });
 }
+
+/**
+ * The function search for specific page in wikipedia and return list of 10 search results
+ * @param {string} requestedPageName The page to search in wikipedia
+ * @param {function} callback Function that call after finish to get the data
+ */
+function searchForWikiPage(requestedPageName, callback) {
+  fetch("https://he.wikipedia.org/w/api.php?action=query&list=search&srsearch=" + requestedPageName + "&format=json" + "&origin=*")
+    .then(function (response) {
+      return response.json();
+    })
+    .then((response) => {
+
+      linksArray = response.query.seach;
+      tArray = [];
+      for (var i in linksArray) { tArray.push(linksArray[i].title); }
+      callback(tArray);
+    });
+}
