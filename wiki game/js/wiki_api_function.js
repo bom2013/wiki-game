@@ -130,7 +130,7 @@ function searchForWikiPage(requestedPageName, callback) {
     })
     .then((response) => {
 
-      linksArray = response.query.seach;
+      linksArray = response.query.search;
       tArray = [];
       for (var i in linksArray) { tArray.push(linksArray[i].title); }
       callback(tArray);
