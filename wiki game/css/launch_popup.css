@@ -1,0 +1,20 @@
+body {
+  direction: rtl;
+  text-align: center;
+  font-size: 20px;
+  width: 370px;
+  border-style: solid;
+}
+
+input {
+  width: 100px;
+  font-size: 20px;
+}
+
+.randButton {
+  margin: 5px;
+}
+
+button {
+  font-size: 20px;
+}
