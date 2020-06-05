@@ -12,7 +12,6 @@ function getRandomWikiPage(callback) {
     .then((response) => {
       var pages = response.query.random; // Process the output to get the image names
       res = pages[0].title;
-      console.log("Finish to get the data(" + res + "), call the call back function");
       callback(getWikiLinkFromPageName(res));
     });
 }
