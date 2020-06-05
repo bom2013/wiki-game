@@ -4,7 +4,7 @@ var port = chrome.runtime.connect({
 
 port.onMessage.addListener(function (message) {
   if (message == "START") {
-    console.log("Get START message - popup.js");
+    console.log("Get START message - launch_popup.js");
     //open new tab
     chrome.storage.local.get("src_page", function (s_p) {
       chrome.tabs.create({
@@ -25,16 +25,7 @@ $(document).ready(function () {
     console.log("Start game");
     port.postMessage("RESTART");
   });
-  $('#join-game-button').click(function () {
-    var srcPage = prompt("דף מקור", "");
-    var desPage = prompt("דף יעד", "");
-    //set the popup to game_popup.html
-    chrome.browserAction.setPopup({
-      popup: "src/game_popup.html"
-    });
-    //message and log
-    console.log("Join game, src=" + srcPage + ", des=" + desPage);
-    //Using "|" To separate the arguments because the character "|" cannot be in wiki page name
-    port.postMessage("JOIN|" + srcPage + "|" + desPage);
+  $('#create-game-button').click(function () {
+    window.location.href = "src/launch_popup.html";
   });
 });

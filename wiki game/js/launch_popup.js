@@ -1,8 +1,18 @@
+var port = chrome.runtime.connect({
+  name: "background"
+});
 
-//TODO: change to popup.html in the manifest
-//TODO: download jquary ui
-//TODO: fix autocompleete
-//TODO: upgrade this to jquary
+port.onMessage.addListener(function (message) {
+  if (message == "START") {
+    console.log("Get START message - popup.js");
+    //open new tab
+    chrome.storage.local.get("src_page", function (s_p) {
+      chrome.tabs.create({
+        url: s_p.src_page
+      });
+    });
+  }
+});
 
 $(function () {
   $('#src-page-inp').on('input', function (e) {
@@ -21,6 +31,21 @@ $(function () {
           source: d
         });
       });
+    }
+  });
+  $('#start-button').click(function () {
+    var srcPage = $("#src-page-inp").val();
+    var desPage = $("#des-page-inp").val();
+    if (srcPage == desPage)
+      alert("דף התחלה ודף סיום אינם יכולים להיות זהים");
+    else if (srcPage.length == 0 || desPage.length == 0)
+      alert('הכנס דף מקור+יעד, במידה ואין לך רעיון תוכל להשתמש בלחצן "הגרל"');
+    else {
+      chrome.browserAction.setPopup({
+        popup: "src/game_popup.html"
+      });
+      //Using "|" To separate the arguments because the character "|" cannot be in wiki page name
+      port.postMessage("JOIN|" + srcPage + "|" + desPage);
     }
   });
 });
