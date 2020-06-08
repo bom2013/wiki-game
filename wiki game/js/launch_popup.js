@@ -48,4 +48,14 @@ $(function () {
       port.postMessage("JOIN|" + srcPage + "|" + desPage);
     }
   });
+  $('#src-rand-button').click(function(){
+    getRandomWikiPage(function(pageName){
+      $('#src-page-inp').val(pageName);
+    });
+  });
+  $('#des-rand-button').click(function(){
+    getRandomWikiPage(function(pageName){
+      $('#des-page-inp').val(pageName);
+    });
+  });
 });
