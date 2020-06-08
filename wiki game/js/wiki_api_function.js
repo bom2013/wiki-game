@@ -20,9 +20,8 @@ function getRandomWikiPage(callback) {
  *
  * @param {function} callback The function callback in the end of the function
  */
-function getRandomWikiPageLink(callback)
-{
-  getRandomWikiPage(function(pageName){
+function getRandomWikiPageLink(callback) {
+  getRandomWikiPage(function (pageName) {
     callback(getWikiLinkFromPageName(pageName))
   });
 }
