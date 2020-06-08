@@ -17,6 +17,9 @@ chrome.runtime.onConnect.addListener(function (port) {
       chrome.storage.local.set({
         page_list: []
       });
+      chrome.storage.local.set({
+        start_time: new Date().getTime()
+      });
       getRandomWikiPageLink(function (desPage) {
         chrome.storage.local.set({
           des_page: desPage
@@ -49,6 +52,9 @@ chrome.runtime.onConnect.addListener(function (port) {
       });
       chrome.storage.local.set({
         page_list: []
+      });
+      chrome.storage.local.set({
+        start_time: new Date().getTime()
       });
       arg = message.substr(5);
       srcPage = arg.substr(0, arg.indexOf("|"));
