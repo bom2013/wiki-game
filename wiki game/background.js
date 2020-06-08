@@ -17,7 +17,7 @@ chrome.runtime.onConnect.addListener(function (port) {
       chrome.storage.local.set({
         page_list: []
       });
-      getRandomWikiPage(function (desPage) {
+      getRandomWikiPageLink(function (desPage) {
         chrome.storage.local.set({
           des_page: desPage
         });
@@ -25,7 +25,7 @@ chrome.runtime.onConnect.addListener(function (port) {
           des_page_name: getPageNameFromWikiLink(desPage)
         });
         console.log("Set des page - background.js");
-        getRandomWikiPage(function (srcPage) {
+        getRandomWikiPageLink(function (srcPage) {
           chrome.storage.local.set({
             src_page: srcPage
           });

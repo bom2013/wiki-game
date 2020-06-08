@@ -4,17 +4,30 @@
  * @param {function} callback The function callback in the end of the function
  */
 function getRandomWikiPage(callback) {
-  var res;
+  var pageName;
   fetch("https://he.wikipedia.org/w/api.php?action=query&list=random&format=json&rnnamespace=0&rnlimit=1" + "&origin=*")
     .then(function (response) {
       return response.json();
     })
     .then((response) => {
       var pages = response.query.random; // Process the output to get the image names
-      res = pages[0].title;
-      callback(getWikiLinkFromPageName(res));
+      pageName = pages[0].title;
+      callback(pageName);
     });
 }
+/**
+ * Get random wiki page Link
+ *
+ * @param {function} callback The function callback in the end of the function
+ */
+function getRandomWikiPageLink(callback)
+{
+  getRandomWikiPage(function(pageName){
+    callback(getWikiLinkFromPageName(pageName))
+  });
+}
+
+
 
 /**
  * Get all internal link from wiki page
@@ -76,6 +89,7 @@ function getAllCategoriesOfWikiPage(pageName, callback) {
       callback(tArray);
     });
 }
+
 /**
  * Check if wiki page is Orphan page(https://en.wikipedia.org/wiki/Wikipedia:Orphan)
  * @param {string} pageName The wiki page name
