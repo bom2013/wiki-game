@@ -9,6 +9,12 @@
     "js": ["jquery-3.5.0.min.js", "js/wiki_api_function.js", "content.js"],
     "matches": ["https://he.wikipedia.org/*"]
   }],
+  "icons": {
+    "16": "images/wiki-logo.svg",
+    "32": "images/wiki-logo.svg",
+    "48": "images/wiki-logo.svg",
+    "128": "images/wiki-logo.svg"
+  },
   "author": {
     "name": "Noam Ben Shlomo",
     "github": "https://github.com/bom2013"
