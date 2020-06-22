@@ -8,6 +8,6 @@ Try to get from one page to the other!
 4. Click Load unpacked extension...
 5. enjoy 😁
 ## Thanks
-Thank to YehudaEi about the help and the code reviews
+Thank to YehudaEi for the help and the code reviews
 ## Contribution
 Any contribution is welcome, just send a PR :)
