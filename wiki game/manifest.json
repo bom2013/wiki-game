@@ -1,14 +1,26 @@
 {
   "background": {
-    "scripts": ["jquery-3.5.0.min.js", "js/wiki_api_function.js", "background.js"]
+    "scripts": [
+      "jquery-3.5.0.min.js",
+      "js/wiki_api_function.js",
+      "background.js"
+    ]
   },
   "browser_action": {
     "default_popup": "popup.html"
   },
-  "content_scripts": [{
-    "js": ["jquery-3.5.0.min.js", "js/wiki_api_function.js", "content.js"],
-    "matches": ["https://he.wikipedia.org/*"]
-  }],
+  "content_scripts": [
+    {
+      "js": [
+        "jquery-3.5.0.min.js",
+        "js/wiki_api_function.js",
+        "content.js"
+      ],
+      "matches": [
+        "https://he.wikipedia.org/*"
+      ]
+    }
+  ],
   "icons": {
     "16": "images/wiki-logo.svg",
     "32": "images/wiki-logo.svg",
@@ -21,6 +33,10 @@
   },
   "manifest_version": 2,
   "name": "The Wikipedia Game",
-  "permissions": ["https://he.wikipedia.org/", "tabs", "storage"],
+  "permissions": [
+    "https://he.wikipedia.org/",
+    "tabs",
+    "storage"
+  ],
   "version": "1.0"
 }

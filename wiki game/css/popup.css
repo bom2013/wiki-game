@@ -11,10 +11,6 @@ body {
   margin: 10px;
 }
 
-/*
-.btn-group {
-  width: 370px;
-} */
 .btn-group button:hover {
   background-color: #565452;
 }
