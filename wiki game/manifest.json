@@ -9,6 +9,10 @@
     "js": ["jquery-3.5.0.min.js", "js/wiki_api_function.js", "content.js"],
     "matches": ["https://he.wikipedia.org/*"]
   }],
+  "author": {
+    "name": "Noam Ben Shlomo",
+    "github": "https://github.com/bom2013"
+  },
   "manifest_version": 2,
   "name": "The Wikipedia Game",
   "permissions": ["https://he.wikipedia.org/", "tabs", "storage"],

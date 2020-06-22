@@ -7,9 +7,8 @@ body {
 .btn-group button {
   background-color: #ada8a5;
   color: black;
-  font-size: 20px;
-  margin-left: auto;
-  margin-right: auto;
+  font-size: 25px;
+  margin: 15px;
 }
 
 /*
